@@ -1,34 +1,30 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Modal } from './ModalWin/index';
 
-export class App extends Component {
-  state = {
-    request: '',
-    page: 1,
-    isShowModal: false,
-    modalImage: '',
-  };
-  formSubmitHandler = data => {
-    if (this.state.request !== data) {
-      this.setState({
-        request: data,
-      });
+export function App() {
+  const [request, setRequest] = useState('');
+  const page = 1;
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [modalImage, setModalImage] = useState('');
+
+  const formSubmitHandler = data => {
+    if (request !== data) {
+      setRequest(data);
     } else {
       toast.warn('This request is already running, please enter another one');
     }
   };
-  showModal = modalImage => {
-    this.setState({
-      isShowModal: true,
-      modalImage: modalImage,
-    });
+  const showModal = modalImage => {
+    setIsShowModal(true);
+    setModalImage(modalImage);
   };
-  closeModalBtn = () => {
-    this.setState({ isShowModal: false, modalImage: '' });
+  const closeModalBtn = () => {
+    setIsShowModal(false);
+    setModalImage('');
   };
   // toggleModal = () => {
   //   this.setState(prev => ({
@@ -36,21 +32,14 @@ export class App extends Component {
   //   }));
   // };
   //
-  render() {
-    const { request, page, isShowModal, modalImage } = this.state;
-    return (
-      <>
-        <ToastContainer autoClose={1500} />
-        <Searchbar formSubmit={this.formSubmitHandler} />
-        <ImageGallery
-          request={request}
-          page={page}
-          showModal={this.showModal}
-        />
-        {isShowModal && (
-          <Modal closeModalBtn={this.closeModalBtn} modalImage={modalImage} />
-        )}
-      </>
-    );
-  }
+  return (
+    <>
+      <ToastContainer autoClose={1500} />
+      <Searchbar formSubmit={formSubmitHandler} />
+      <ImageGallery requestFirst={request} page={page} showModal={showModal} />
+      {isShowModal && (
+        <Modal closeModalBtn={closeModalBtn} modalImage={modalImage} />
+      )}
+    </>
+  );
 }

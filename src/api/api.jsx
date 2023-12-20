@@ -2,11 +2,11 @@ import axios from 'axios';
 axios.defaults.baseURL = 'https://pixabay.com/api';
 const API_KEY = '40254095-fb7e3bf791467f50a6328bb1e';
 
-export const GetApi = async (carrRequest, page) => {
+export const GetApi = async (requestFirst, page) => {
   const { data } = await axios('/', {
     params: {
       key: API_KEY,
-      q: carrRequest,
+      q: requestFirst,
       image_type: 'photo',
       orientation: 'horizontal',
       safesearch: 'true',
@@ -16,3 +16,4 @@ export const GetApi = async (carrRequest, page) => {
   });
   return data;
 };
+// carrRequest;
