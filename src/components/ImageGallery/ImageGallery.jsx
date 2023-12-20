@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { GetApi } from 'api/api';
 import { useState, useEffect } from 'react';
 // import { toast } from 'react-toastify';
